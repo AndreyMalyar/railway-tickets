@@ -1,0 +1,25 @@
+
+
+.header{
+
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px;
+  &__menu{
+    max-width: 610px;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    &-item{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
