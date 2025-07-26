@@ -1,11 +1,19 @@
-import type {JSX} from "react";
+import type {JSX, ButtonHTMLAttributes} from "react";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     label: string;
     background?: string;
 }
 
-function GlobsButton({label, background = "#f00"}: ButtonProps): JSX.Element {
-    return <button style={{backgroundColor: background}}>{label}</button>
+function GlobsButton({label, background = "#f00", ...props}: ButtonProps): JSX.Element {
+    return (
+        <button
+            style={{backgroundColor: background}}
+            {...props}
+        >
+            {label}
+        </button>
+    )
 }
+
 export default GlobsButton;
