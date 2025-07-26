@@ -12,11 +12,12 @@ body{
 }
 
 .container{
+  width: 100%;
+  max-width: 1312px;
   margin: 0 auto;
+  padding: 0 15px;
   &__header,
   &__footer{
-    width: 100%;
-    max-width: 1312px;
     padding: 38px 15px;
   }
 }
