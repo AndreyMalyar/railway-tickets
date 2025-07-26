@@ -1,16 +1,18 @@
-import {useState} from "react";
 import GlobsButton from "../GlobsButton.tsx";
 import TripTypeSelector from "./TripTypeSelector.tsx";
-import type {FormType} from "./typeForm.ts";
-
+import { useAppSelector, useAppDispatch} from "../../store/hooks.ts";
+import { setTripType } from "../../store/slice/formSlice.ts";
 
 function Form(){
-    const [tripType, setTripType] = useState<FormType>('roundTrip');
-
+    const dispatch = useAppDispatch();
+    const tripType = useAppSelector(state => state.form.tripType)
 
     return (
         <form className="section-home__form">
-            <TripTypeSelector value={tripType} onChange={setTripType} />
+            <TripTypeSelector
+                value={tripType}
+                onChange={(value) => dispatch(setTripType(value))}
+            />
             <fieldset>
                 <label htmlFor="departure">Departure</label>
                 <input
