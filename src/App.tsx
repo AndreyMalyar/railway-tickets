@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { setTheme } from "./store/slices/uiSlice.ts";
 import { useEffect } from "react";
+import Calendar from "./components/forms/Calendar.tsx";
 
 
 function App() {
