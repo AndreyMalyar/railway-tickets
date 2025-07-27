@@ -1,2 +1,24 @@
 
 
+.section-home{
+  background-image: url(../../assets/bg-home.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  //min-height: calc(100vh - 127px);
+  padding: 96px 0;
+  &__title{
+    text-align: center;
+    font-weight: 700;
+    font-size: 82px;
+    line-height: 123px;
+  }
+  &__subtitle{
+    font-size: 28px;
+    line-height: 42px;
+    text-transform: lowercase;
+    text-align: center;
+  }
+}
+

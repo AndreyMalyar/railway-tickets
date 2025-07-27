@@ -17,7 +17,6 @@ const initialState: FormState = {
     departureDate: '',
     returnDate: '',
     passenger: 1,
-
 }
 
 export const formSlice = createSlice({
