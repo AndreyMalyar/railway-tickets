@@ -1,4 +1,4 @@
-
+@use "../../scss/base/vars" as *;
 
 .header{
 
@@ -17,9 +17,31 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+
     &-item{
       color: #fff;
       text-decoration: none;
+
+      &--dark {
+        color: $text-on-dark;
+
+        &:hover,
+        &.active {
+          color: $primary-btn;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      &--light {
+        color: $text-on-light;
+
+        &:hover,
+        &.active {
+          color: $primary-btn;
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+
     }
   }
 }

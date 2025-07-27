@@ -1,4 +1,5 @@
 import Form from "../../components/forms/Form.tsx";
+import "./styleHome.scss";
 
 
 function HomePage(){

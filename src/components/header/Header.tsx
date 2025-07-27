@@ -5,7 +5,7 @@ import './styleHeader.scss';
 function Header(){
 
     return (
-        <header className="header">
+        <header style={{color: "red"}} className="header">
             <div className="container container__header">
                 <Menu />
             </div>
