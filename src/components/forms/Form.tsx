@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setDeparture, setArrival, setDepartureDate, setReturnDate } from "../../store/slices/formSlice.ts";
 import './styleForm.scss';
 import DatePicker from "./DatePicker.tsx"
+import DateRangePicker from "./DateRangePicker.tsx";
 
 
 
@@ -55,19 +56,19 @@ function Form(){
             <fieldset className="form__fieldset">
                 <legend>Pick your lucky day</legend>
 
-                <DatePicker
-                    label="Depart"
-                    id="depart"
-                    value={departureDate}
-                    onChange={(date) => dispatch(setDepartureDate(date))}
-                />
-
-                {tripType === 'roundTrip' && (
+                {tripType === 'roundTrip' ? (
+                    <DateRangePicker
+                        departValue={departureDate}
+                        returnValue={returnDate}
+                        onDepartChange={(date) => dispatch(setDepartureDate(date))}
+                        onReturnChange={(date) => dispatch(setReturnDate(date))}
+                    />
+                ) : (
                     <DatePicker
-                        label="Return"
-                        id="return"
-                        value={returnDate}
-                        onChange={(date) => dispatch(setReturnDate(date))}
+                        label="Depart"
+                        id="depart"
+                        value={departureDate}
+                        onChange={(date) => dispatch(setDepartureDate(date))}
                     />
                 )}
             </fieldset>
