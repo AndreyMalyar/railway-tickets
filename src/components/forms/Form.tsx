@@ -5,9 +5,8 @@ import { setTripType } from "../../store/slices/formSlice.ts";
 import { useNavigate } from "react-router-dom";
 import { setDeparture, setArrival, setDepartureDate, setReturnDate } from "../../store/slices/formSlice.ts";
 import './styleForm.scss';
-import DatePicker from "./DatePicker.tsx"
 import DateRangePicker from "./DateRangePicker.tsx";
-
+import { useEffect } from "react";
 
 
 function Form(){
@@ -15,8 +14,14 @@ function Form(){
     const dispatch = useAppDispatch();
     const { tripType, departure, arrival, departureDate, returnDate, passenger } = useAppSelector(state => state.form);
 
+    useEffect(() => {
+        dispatch(setDepartureDate(''));
+        dispatch(setReturnDate(''));
+    }, [tripType, dispatch]); // срабатывает при изменении tripType
+
+
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault(); // предотвращает перезагрузку
+        e.preventDefault();
         navigate('/search-results');
     };
 
@@ -56,21 +61,15 @@ function Form(){
             <fieldset className="form__fieldset">
                 <legend>Pick your lucky day</legend>
 
-                {tripType === 'roundTrip' ? (
-                    <DateRangePicker
-                        departValue={departureDate}
-                        returnValue={returnDate}
-                        onDepartChange={(date) => dispatch(setDepartureDate(date))}
-                        onReturnChange={(date) => dispatch(setReturnDate(date))}
-                    />
-                ) : (
-                    <DatePicker
-                        label="Depart"
-                        id="depart"
-                        value={departureDate}
-                        onChange={(date) => dispatch(setDepartureDate(date))}
-                    />
-                )}
+                <DateRangePicker
+                    departValue={departureDate}
+                    returnValue={returnDate}
+                    returnDisabled={tripType === 'oneWay'}
+                    onDepartChange={(date) => dispatch(setDepartureDate(date))}
+                    onReturnChange={(date) => dispatch(setReturnDate(date))}
+                />
+
+
             </fieldset>
             <GlobsButton
                 className="form__button"

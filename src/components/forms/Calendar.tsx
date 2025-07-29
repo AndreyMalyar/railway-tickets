@@ -10,12 +10,13 @@ const daysOfWeekArr = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
 interface CalendarProps {
     onDateSelect: (departDate: string, returnDate?: string) => void;
+    onClose: () => void
     selectedDate?: string;
     mode: 'single' | 'range'; // одна дата или диапазон
 }
 
 
-function Calendar({ onDateSelect, selectedDate, mode }: CalendarProps) {
+function Calendar({ onDateSelect, onClose, selectedDate, mode }: CalendarProps) {
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 
@@ -30,28 +31,30 @@ function Calendar({ onDateSelect, selectedDate, mode }: CalendarProps) {
 
     const handleDateClick = (dateString: string) => {
         if (mode === 'single') {
-            onDateSelect(dateString); // только для single - сразу закрывается
+            setSelectedDates(prev => ({ ...prev, depart: dateString }));
+            onDateSelect(dateString); // сразу передаем данные
         } else {
             // для range mode - НЕ вызываем onDateSelect, только обновляем внутреннее состояние
             if (selectionStep === 'depart') {
                 setSelectedDates(prev => ({ ...prev, depart: dateString }));
                 setSelectionStep('return');
+                onDateSelect(dateString); // передаем depart сразу
             } else {
                 setSelectedDates(prev => ({ ...prev, return: dateString }));
-                // НЕ вызываем onDateSelect здесь!
+                onDateSelect(selectedDates.depart, dateString); // передаем обе даты
             }
         }
     };
 
     const handleApply = () => {
-        if (mode === 'range') {
-            onDateSelect(selectedDates.depart, selectedDates.return); // ТОЛЬКО здесь вызываем
-        }
+        onClose(); // закрываем календарь
     };
 
     const handleReset = () => {
         setSelectedDates({ depart: '', return: '' });
         setSelectionStep('depart');
+        // Очищаем данные в форме тоже
+        onDateSelect('', '');
     };
 
     const generateDays = (year: number, month: number) => {
@@ -84,7 +87,10 @@ function Calendar({ onDateSelect, selectedDate, mode }: CalendarProps) {
         for (let day = 1; day <= lastDayOfMonth; day++) {
             const dateString = `${adjustedYear}-${(adjustedMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-            const isSelected = selectedDates.depart === dateString || selectedDates.return === dateString;
+            // В generateDays для single mode проверка выделения
+            const isSelected = mode === 'single'
+                ? selectedDates.depart === dateString
+                : selectedDates.depart === dateString || selectedDates.return === dateString;
 
             days.push(
                 <div
@@ -120,26 +126,15 @@ function Calendar({ onDateSelect, selectedDate, mode }: CalendarProps) {
 
     return (
         <div className="calendar">
-            {/* Поля для дат сверху */}
-            <div className="calendar__inputs">
-                <div className={`calendar__input ${selectionStep === 'depart' ? 'calendar__input--active' : ''}`}>
-                    <span className="calendar__icon">📅</span>
-                    <span>{selectedDates.depart || 'Depart'}</span>
-                </div>
-                <div className={`calendar__input ${selectionStep === 'return' ? 'calendar__input--active' : ''}`}>
-                    <span className="calendar__icon">📅</span>
-                    <span>{selectedDates.return || 'Return'}</span>
-                </div>
-            </div>
 
             {/* Заголовок с навигацией */}
             <div className="calendar__header">
-                <button onClick={prevMonth}>←</button>
+                <button type="button" onClick={prevMonth}>←</button>
                 <div className="calendar__months-titles">
                     <span>{monthArr[currentMonth]} {currentYear}</span>
                     <span>{monthArr[(currentMonth + 1) % 12]} {currentMonth === 11 ? currentYear + 1 : currentYear}</span>
                 </div>
-                <button onClick={nextMonth}>→</button>
+                <button type="button" onClick={nextMonth}>→</button>
             </div>
 
             {/* Два месяца рядом */}
@@ -175,8 +170,8 @@ function Calendar({ onDateSelect, selectedDate, mode }: CalendarProps) {
 
             {/* Кнопки с обработчиками */}
             <div className="calendar__actions">
-                <button className="calendar__reset" onClick={handleReset}>Reset</button>
-                <button className="calendar__apply" onClick={handleApply}>Apply</button>
+                <button type="button" className="calendar__reset" onClick={handleReset}>Reset</button>
+                <button type="button" className="calendar__apply" onClick={handleApply}>Apply</button>
             </div>
         </div>
     )
