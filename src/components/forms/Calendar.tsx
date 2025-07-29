@@ -40,6 +40,11 @@ function Calendar({ onDateSelect, onClose, selectedDate, mode }: CalendarProps) 
                 setSelectionStep('return');
                 onDateSelect(dateString); // передаем depart сразу
             } else {
+                //Проверяем что Return дата позже Depart
+                if (dateString <= selectedDates.depart) {
+                    // Если Return не позже Depart - игнорируем клик или показываем ошибку
+                    return;
+                }
                 setSelectedDates(prev => ({ ...prev, return: dateString }));
                 onDateSelect(selectedDates.depart, dateString); // передаем обе даты
             }
@@ -58,7 +63,6 @@ function Calendar({ onDateSelect, onClose, selectedDate, mode }: CalendarProps) 
     };
 
     const generateDays = (year: number, month: number) => {
-
         // Корректируем месяц если больше 11
         let adjustedYear = year;
         let adjustedMonth = month;
@@ -70,9 +74,13 @@ function Calendar({ onDateSelect, onClose, selectedDate, mode }: CalendarProps) 
 
         const days = [];
         const firstDayOfMonth = new Date(adjustedYear, adjustedMonth, 1).getDay();
-        const correctedFirstDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1; // понедельник = 0
+        const correctedFirstDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1;
         const lastDayOfMonth = new Date(adjustedYear, adjustedMonth + 1, 0).getDate();
         const lastDayOfPrevMonth = new Date(adjustedYear, adjustedMonth, 0).getDate();
+
+        // Создаем сегодняшнюю дату один раз
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
         // Предыдущие дни месяца
         for (let i = correctedFirstDay; i > 0; i--) {
@@ -83,20 +91,32 @@ function Calendar({ onDateSelect, onClose, selectedDate, mode }: CalendarProps) 
             );
         }
 
-        // Основные дни месяца
+        // ОДИН цикл для основных дней с валидацией
         for (let day = 1; day <= lastDayOfMonth; day++) {
             const dateString = `${adjustedYear}-${(adjustedMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-            // В generateDays для single mode проверка выделения
+            const currentDate = new Date(adjustedYear, adjustedMonth, day);
+            const isPastDate = currentDate < today;
+
+            // Проверка Return даты
+            const isDepartSelected = selectedDates.depart !== '';
+            const isBeforeOrEqualDepart = isDepartSelected && dateString <= selectedDates.depart;
+            const isInvalidReturn = mode === 'range' && selectionStep === 'return' && isBeforeOrEqualDepart;
+
+            const isDisabled = isPastDate || isInvalidReturn;
+
             const isSelected = mode === 'single'
                 ? selectedDates.depart === dateString
                 : selectedDates.depart === dateString || selectedDates.return === dateString;
 
+            // Если дата выбрана - она не должна быть disabled
+            const finalDisabled = isDisabled && !isSelected;
+
             days.push(
                 <div
                     key={`${adjustedMonth}-${day}`}
-                    className={`calendar__day calendar__day--active ${isSelected ? 'calendar__day--selected' : ''}`}
-                    onClick={() => handleDateClick(dateString)}
+                    className={`calendar__day calendar__day--active ${isSelected ? 'calendar__day--selected' : ''} ${finalDisabled ? 'calendar__day--disabled' : ''}`}
+                    onClick={() => !finalDisabled && handleDateClick(dateString)}
                 >
                     {day}
                 </div>

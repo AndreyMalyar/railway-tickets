@@ -158,3 +158,14 @@
   border-color: #6366f1;
   background-color: #f8faff;
 }
+
+.calendar__day--disabled {
+  color: #ccc !important;
+  cursor: not-allowed !important;
+  background-color: #f9f9f9;
+  opacity: 0.5;
+
+  &:hover {
+    background-color: #f9f9f9 !important; // отключаем hover эффект
+  }
+}
