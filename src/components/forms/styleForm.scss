@@ -80,6 +80,39 @@
   }
 }
 
+.date-range-picker{
+  width: 100%;
+  position: relative;
+}
+.date-range-picker__inputs{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.date-range-picker__input{
+  width: 45%;
+  padding: 16px 24px;
+  background-color: #fff;
+  border-radius: 10px;
+  color: #90A3BF;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+.date-range-picker__input--disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 
 
 

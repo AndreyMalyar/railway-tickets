@@ -1,0 +1,171 @@
+.calendar {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: absolute;
+
+  // Поля для дат сверху
+  &__inputs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  &__input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #999;
+    cursor: pointer;
+  }
+
+  // Навигация по месяцам
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #f00;
+
+    button {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+
+  &__months-titles {
+    display: flex;
+    gap: 80px;
+    font-weight: 600;
+
+    span {
+      text-align: center;
+      min-width: 120px;
+    }
+  }
+
+  // Два месяца рядом
+  &__months {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+
+  &__month {
+    flex: 1;
+  }
+
+  // Дни недели
+  &__days-of-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  &__day-of-week {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    padding: 8px 4px;
+    text-transform: uppercase;
+  }
+
+  // Сетка дней
+  &__body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  // Стили дней
+  &__day {
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #000;
+
+    &--passive {
+      color: #ccc;
+    }
+
+    &--active {
+      &:hover {
+        background-color: rgba(99, 102, 241, 0.25);
+      }
+    }
+
+    &--selected {
+      background-color: #6366f1;
+      color: white;
+    }
+  }
+
+  // Кнопки внизу
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+
+    button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+  }
+
+  &__reset {
+    background: none;
+    border: 1px solid #e0e0e0;
+    color: #666;
+
+    &:hover {
+      background-color: #f9f9f9;
+    }
+  }
+
+  &__apply {
+    background-color: #6366f1;
+    border: none;
+    color: white;
+
+    &:hover {
+      background-color: #5b21b6;
+    }
+  }
+}
+
+.calendar__input--active {
+  border-color: #6366f1;
+  background-color: #f8faff;
+}
+
+.calendar__day--disabled {
+  color: #ccc !important;
+  cursor: not-allowed !important;
+  background-color: #f9f9f9;
+  opacity: 0.5;
+
+  &:hover {
+    background-color: #f9f9f9 !important; // отключаем hover эффект
+  }
+}
