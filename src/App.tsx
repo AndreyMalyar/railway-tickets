@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { setTheme } from "./store/slices/uiSlice.ts";
 import { useEffect } from "react";
+import NotFoundPage from "./pages/404-Page/NotFoundPage.tsx";
 
 
 function App() {
@@ -26,11 +27,13 @@ function App() {
     }, [location.pathname, dispatch]);
 
 
-    const getPageConfig = (currentTheme: 'light' | 'dark'): PageConfig => {
-        if(currentTheme === 'dark') {
+    const getPageConfig = (currentTheme: 'light' | 'dark', pathname: string): PageConfig => {
+        const validRoutes = ["/", "/search-results", "/review-booking", "mobile-app", "/faq\'s", "/contact"];
+        const isValidRoute = validRoutes.includes(pathname)
+        if(currentTheme === 'dark' || !isValidRoute) {
             return {
                 hasFooter: false,
-                backgroundClass: 'page--dark'
+                backgroundClass: currentTheme === 'dark' ? "page--dark": "page--light",
             }
         }
         return {
@@ -39,7 +42,7 @@ function App() {
         }
     }
 
-    const pageConfig = getPageConfig(theme);
+    const pageConfig = getPageConfig(theme, location.pathname);
   return (
     <div className={pageConfig.backgroundClass}>
         <Header />
@@ -50,6 +53,7 @@ function App() {
             <Route path="/mobile-app" element={<h1>Здесь должно быть мобильное приложение</h1>} />
             <Route path="/faq's" element={<h1>Здесь должны быть часто задаваемые вопросы</h1>} />
             <Route path="/contact" element={<h1>Здесь должны быть контакты</h1>} />
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
         {pageConfig.hasFooter && <Footer />}
     </div>
