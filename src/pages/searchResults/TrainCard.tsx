@@ -1,6 +1,6 @@
-import createMockTrains from "./data/trainData.ts";
-import type {TrainStation } from "./data/trainData.ts";
+import createMockTrains from "../../data/trainData.ts";
 import { useNavigate } from "react-router-dom";
+import RouteInfo from "../../components/RouteInfo.tsx";
 
 
 const trains = createMockTrains("New Delhi", "Lucknow", "Nov 16", "Nov 17");
@@ -16,15 +16,6 @@ const getClassColor = (type: ClassType) => {
     return colors[type]
 }
 
-const showTrainStation = (item: TrainStation) => {
-    return (
-        <>
-            <p>{item.time}</p>
-            <p>{item.station}</p>
-            <p>{item.date}</p>
-        </>
-    )
-}
 
 function TrainCards() {
     const navigate = useNavigate();
@@ -41,15 +32,7 @@ function TrainCards() {
                         <p className="train-card__title">{item.number} – {item.name}</p>
                         <p className="train-card__runsOn">Runs on</p>
                         <p className="train-card__runsOn-description">{item.runsOn}</p>
-                        <div className="train-card__box">
-                            <div className="train-card__box-item">
-                                {showTrainStation(item.departure)}
-                            </div>
-                            <span>{item.duration}</span>
-                            <div className="train-card__box-item_right">
-                                {showTrainStation(item.arrival)}
-                            </div>
-                        </div>
+                        <RouteInfo departure={item.departure} arrival={item.arrival} duration={item.duration} />
                         <div className="train-card__class-list">
                             {item.classes.map(classItem => (
                                 <button type="button" onClick={onClick} key={classItem.type} style={{backgroundColor: getClassColor(classItem.type as ClassType)}} className="train-card__btn">

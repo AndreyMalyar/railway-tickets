@@ -1,6 +1,6 @@
 
 .section__search-results{
-  max-width: calc(640px + 15px);
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -109,17 +109,7 @@
     }
   }
 
-  &__box{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &-item{
-      &_right{
-        text-align: right;
-      }
-    }
-  }
+
 
   &__class-list{
     width: 100%;

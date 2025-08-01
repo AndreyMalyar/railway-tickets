@@ -8,11 +8,14 @@ function SearchResultsPage(){
 
     return (
         <main>
-            <section className="section section__search-results">
-                <Form />
-                <AdBanner />
-                <TrainCards />
-            </section>
+            <div className="container container__content">
+                <section className="section section__search-results">
+                    <h2 className="section__title">Search Results</h2>
+                    <Form/>
+                    <AdBanner/>
+                    <TrainCards/>
+                </section>
+            </div>
         </main>
     )
 }

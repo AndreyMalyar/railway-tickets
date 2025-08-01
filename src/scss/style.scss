@@ -22,6 +22,9 @@ body{
   &__footer{
     padding: 38px 15px;
   }
+  &__content{
+    width: 640px;
+  }
 }
 
 .logo{
@@ -54,4 +57,56 @@ body{
   min-height: 100vh;
   color: $text-on-light;
 }
+
+.section{
+  padding: 32px 0 128px;
+  &__title{
+    font-size: 32px;
+    line-height: 48px;
+    color: #5E4AE3;
+    font-weight: 400;
+  }
+}
+
+.routeInfo{
+  &__box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-item{
+    &_right{
+      text-align: right;
+    }
+    &__data{
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 21px;
+      color: #010400;
+      margin-bottom: 4px;
+    }
+    &__time,
+    &__station{
+      font-size: 14px;
+      line-height: 21px;
+      color: #010400;
+    }
+  }
+  &__duration{
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 15px;
+    color: #90A3BF;
+  }
+}
+
+
+
+
+
+
+
+
+
 

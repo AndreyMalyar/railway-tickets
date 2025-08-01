@@ -1,6 +1,6 @@
 
-import bgRec_1 from '../../../assets/RecBg-2.png'
-import bgRec_2 from '../../../assets/RecBg-1.jpg'
+import bgRec_1 from '../assets/RecBg-2.png'
+import bgRec_2 from '../assets/RecBg-1.jpg'
 
 type ImageType = typeof bgRec_1 | typeof bgRec_2
 type AdItem = {

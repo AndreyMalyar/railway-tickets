@@ -8,6 +8,8 @@ interface FormState {
     departureDate: string;
     returnDate: string;
     passenger: number;
+    selectedTrain: string | null;
+    selectedClass: string | null;
 }
 
 const initialState: FormState = {
@@ -17,6 +19,8 @@ const initialState: FormState = {
     departureDate: '',
     returnDate: '',
     passenger: 1,
+    selectedTrain: null,
+    selectedClass: null,
 }
 
 export const formSlice = createSlice({
@@ -40,9 +44,15 @@ export const formSlice = createSlice({
         },
         setPassenger: (state, action: PayloadAction<number>) => {
             state.passenger = action.payload;
+        },
+        setSelectedTrain: (state, action: PayloadAction<string>) => {
+            state.selectedTrain = action.payload;
+        },
+        setSelectedClass: (state, action: PayloadAction<string>) => {
+            state.selectedClass = action.payload;
         }
     }
 })
 
-export const { setTripType, setDeparture,  setArrival, setDepartureDate, setReturnDate, setPassenger } = formSlice.actions;
+export const { setTripType, setDeparture,  setArrival, setDepartureDate, setReturnDate, setPassenger, setSelectedTrain, setSelectedClass } = formSlice.actions;
 export default formSlice.reducer;

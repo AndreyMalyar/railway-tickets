@@ -9,7 +9,9 @@ function HomePage(){
                 <div className="container">
                     <h1 className="section-home__title">Let's Find That Ticket</h1>
                     <p className="section-home__subtitle">Before Someone Else Does</p>
-                    <Form />
+                    <div className="container container__content">
+                        <Form />
+                    </div>
                 </div>
             </section>
         </main>
