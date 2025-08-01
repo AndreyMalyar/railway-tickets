@@ -1,0 +1,165 @@
+
+.section__search-results{
+  max-width: calc(640px + 15px);
+  margin: 0 auto;
+}
+
+.banners{
+  margin-top: 60px;
+
+  &__box{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__item{
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+
+    &-link{
+      text-decoration: none;
+      position: absolute;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 30px;
+      color: #fff;
+      left: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &-icon{
+      margin-left: 10px;
+      fill: #fff;
+    }
+
+    &-img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    &:before{
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+  }
+  &__description{
+    margin-top: 30px;
+    font-size: 12px;
+    line-height: 18px;
+    color: rgba(1, 4, 0, 0.5);
+  }
+}
+
+
+.train-cards{
+  margin-top: 76px;
+  &__title{
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 48px;
+    color: #010400;
+    margin-bottom: 32px;
+  }
+  &__box{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+.train-card{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background-color: #fff;
+  border: 1px solid rgba(1, 4, 0, 0.5);
+  border-radius: 10px;
+  &__title{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #010400;
+  }
+  &__runsOn{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #010400;
+    &-description{
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      color: #010400;
+      padding: 5px 15px;
+      border: 1px solid #5E4AE3;
+      border-radius: 8px;
+    }
+  }
+
+  &__box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-item{
+      &_right{
+        text-align: right;
+      }
+    }
+  }
+
+  &__class-list{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 160px);
+    gap: 8px;
+    justify-content: space-between;
+
+  }
+  &__btn{
+    padding: 24px 16px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    &-content{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 18px;
+      color: #010400;
+
+      &_price{
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
