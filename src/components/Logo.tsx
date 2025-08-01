@@ -6,10 +6,13 @@ import { useAppSelector } from "../store/hooks.ts";
 interface LogoProps {
     width?: number;
     height?: number;
+    color?: string;
 }
 
-function Logo({width = 73, height = 51}: LogoProps): JSX.Element {
+function Logo({width = 73, height = 51, color}: LogoProps): JSX.Element {
     const theme = useAppSelector(state => state.ui.theme); // получаем тему
+    const logoColor = color ? color : "" ;
+
     return (
         <Link to="/" className={`logo logo--${theme}`}>
             <svg
@@ -17,6 +20,7 @@ function Logo({width = 73, height = 51}: LogoProps): JSX.Element {
                 height={height}
                 viewBox="0 0 73 51"
                 xmlns="http://www.w3.org/2000/svg"
+                style={{fill: logoColor}}
             >
                 <g clipPath="url(#clip0_4181_375)">
                     <path fillRule="evenodd" clipRule="evenodd"
@@ -28,7 +32,7 @@ function Logo({width = 73, height = 51}: LogoProps): JSX.Element {
                     </clipPath>
                 </defs>
             </svg>
-            <span className="logo__name">Railway</span>
+            <span style={{color: logoColor}} className="logo__name">Railway</span>
         </Link>
     )
 }

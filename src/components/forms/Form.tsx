@@ -75,7 +75,6 @@ function Form(){
                 className="form__button"
                 label='Ticket, Please!'
                 type="submit"
-                onClick={() => navigate('/search-results')}
             />
         </form>
     )
