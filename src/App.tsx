@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks.ts";
 import { setTheme } from "./store/slices/uiSlice.ts";
 import { useEffect } from "react";
 import NotFoundPage from "./pages/404-Page/NotFoundPage.tsx";
+import ReviewBookingPage from "./pages/reviewBooking/ReviewBookingPage.tsx";
 
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
-            <Route path="/review-booking" element={<h2>Здесь будет  ReviewBookingPage</h2>} />
+            <Route path="/review-booking" element={<ReviewBookingPage />} />
             <Route path="/mobile-app" element={<h1>Здесь должно быть мобильное приложение</h1>} />
             <Route path="/faq's" element={<h1>Здесь должны быть часто задаваемые вопросы</h1>} />
             <Route path="/contact" element={<h1>Здесь должны быть контакты</h1>} />

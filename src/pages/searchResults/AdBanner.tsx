@@ -1,4 +1,4 @@
-import AdData from "./data/promo.ts";
+import AdData from "../../data/promo.ts";
 
 const arrowIcon = <svg width="9" height="10" viewBox="0 0 9 10" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 0H3.17181L8.23789 5L3.17181 10H0L5.08811 5L0 0Z"/>
