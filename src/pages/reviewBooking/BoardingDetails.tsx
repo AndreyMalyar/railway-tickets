@@ -16,11 +16,11 @@ const arrival = {
 
 function BoardingDetails (){
     return (
-        <section className="section">
-            <h3>Boarding Details</h3>
+        <div className="review">
+            <h3 className="review__title">Boarding Details</h3>
             <p className="">22426 - VANDE BHARAT<span>Class 2A & Tatkal Quota</span></p>
-            {<RouteInfo departure={departure} arrival={arrival} duration={"8 hours"} />}
-        </section>
+            {<RouteInfo departure={departure} arrival={arrival} duration={"8 hours"}/>}
+        </div>
     )
 }
 
