@@ -12,7 +12,7 @@ import { useEffect } from "react";
 function Form(){
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { tripType, departure, arrival, departureDate, returnDate, passenger } = useAppSelector(state => state.form);
+    const { tripType, departure, arrival, departureDate, returnDate, passenger } = useAppSelector(state => state.booking);
 
     useEffect(() => {
         dispatch(setDepartureDate(''));
