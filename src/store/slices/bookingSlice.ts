@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface FormState {
+interface BookingState {
     tripType: 'roundTrip' | 'oneWay';
     departure: string;
     arrival: string;
@@ -10,9 +10,10 @@ interface FormState {
     passenger: number;
     selectedTrain: string | null;
     selectedClass: string | null;
+    selectedFood: number | null;
 }
 
-const initialState: FormState = {
+const initialState: BookingState = {
     tripType: 'roundTrip',
     departure: '',
     arrival: '',
@@ -21,10 +22,11 @@ const initialState: FormState = {
     passenger: 1,
     selectedTrain: null,
     selectedClass: null,
+    selectedFood: null,
 }
 
-export const formSlice = createSlice({
-    name: "Form",
+export const bookingSlice  = createSlice({
+    name: "booking",
     initialState: initialState,
     reducers: {
         setTripType: (state, action: PayloadAction<'roundTrip' | 'oneWay'>) => {
@@ -50,9 +52,23 @@ export const formSlice = createSlice({
         },
         setSelectedClass: (state, action: PayloadAction<string>) => {
             state.selectedClass = action.payload;
+        },
+        setSelectedFood: (state, action: PayloadAction<number | null>) => {
+            state.selectedFood = action.payload;
         }
     }
 })
 
-export const { setTripType, setDeparture,  setArrival, setDepartureDate, setReturnDate, setPassenger, setSelectedTrain, setSelectedClass } = formSlice.actions;
-export default formSlice.reducer;
+export const {
+    setTripType,
+    setDeparture,
+    setArrival,
+    setDepartureDate,
+    setReturnDate,
+    setPassenger,
+    setSelectedTrain,
+    setSelectedClass,
+    setSelectedFood
+} = bookingSlice.actions;
+
+export default bookingSlice.reducer;
