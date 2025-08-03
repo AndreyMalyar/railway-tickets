@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import formSlice from "./slices/formSlice.ts";
+import bookingSlice from "./slices/bookingSlice.ts";
 import uiSlice from "./slices/uiSlice.ts";
 
 
 export const store = configureStore({
     reducer: {
-        form: formSlice,
+        booking: bookingSlice,
         ui: uiSlice,
     }
 })

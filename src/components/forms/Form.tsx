@@ -1,9 +1,9 @@
 import GlobsButton from "../GlobsButton.tsx";
 import TripTypeSelector from "./TripTypeSelector.tsx";
 import { useAppSelector, useAppDispatch} from "../../store/hooks.ts";
-import { setTripType } from "../../store/slices/formSlice.ts";
+import { setTripType } from "../../store/slices/bookingSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { setDeparture, setArrival, setDepartureDate, setReturnDate } from "../../store/slices/formSlice.ts";
+import { setDeparture, setArrival, setDepartureDate, setReturnDate } from "../../store/slices/bookingSlice.ts";
 import './styleForm.scss';
 import DateRangePicker from "./DateRangePicker.tsx";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ import { useEffect } from "react";
 function Form(){
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { tripType, departure, arrival, departureDate, returnDate, passenger } = useAppSelector(state => state.form);
+    const { tripType, departure, arrival, departureDate, returnDate, passenger } = useAppSelector(state => state.booking);
 
     useEffect(() => {
         dispatch(setDepartureDate(''));
