@@ -6,13 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { setDeparture, setArrival, setDepartureDate, setReturnDate } from "../../store/slices/bookingSlice.ts";
 import './styleForm.scss';
 import DateRangePicker from "./DateRangePicker.tsx";
-import { useEffect } from "react";
+import CityAutocomplete from "./CityAutocomplete.tsx";
+import { useEffect, useState } from "react";
 
 
 function Form(){
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { tripType, departure, arrival, departureDate, returnDate, passenger } = useAppSelector(state => state.booking);
+
+    const [localDeparture, setLocalDeparture] = useState(departure);
+    const [localArrival, setLocalArrival] = useState(arrival);
 
     useEffect(() => {
         dispatch(setDepartureDate(''));
@@ -22,6 +26,8 @@ function Form(){
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        dispatch(setDeparture(localDeparture));
+        dispatch(setArrival(localArrival));
         navigate('/search-results');
     };
 
@@ -33,31 +39,22 @@ function Form(){
                 value={tripType}
                 onChange={(value) => dispatch(setTripType(value))}
             />
-            <fieldset className="form__fieldset">
-                <label htmlFor="departure">
-                    Departure
-                    <input
-                        type="text"
-                        name="departure"
-                        id="departure"
-                        placeholder="Your City/Station"
-                        value={departure}
-                        onChange={(evt) => dispatch(setDeparture(evt.target.value))}
-                    />
-                </label>
-                <label htmlFor="arrival">
-                    Arrival
-                    <input
-                        type="text"
-                        name="arrival"
-                        id="arrival"
-                        placeholder="Where to?"
-                        value={arrival}
-                        onChange={(evt) => dispatch(setArrival(evt.target.value))}
-                    />
 
-                </label>
+            <fieldset className="form__fieldset">
+                <CityAutocomplete
+                    value={localDeparture}
+                    onChange={setLocalDeparture}
+                    placeholder="Your City/Station"
+                    excludeCity={localArrival}
+                />
+                <CityAutocomplete
+                    value={localArrival}
+                    onChange={setLocalArrival}
+                    placeholder="Where to?"
+                    excludeCity={localDeparture}
+                />
             </fieldset>
+
             <fieldset className="form__fieldset">
                 <legend>Pick your lucky day</legend>
 

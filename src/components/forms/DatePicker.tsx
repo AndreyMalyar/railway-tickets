@@ -34,6 +34,7 @@ function DatePicker({ label, value, onChange, id }: DatePickerProps) {
                         onDateSelect={handleDateSelect}
                         selectedDate={value}
                         mode="single"
+                        onClose={() => setIsOpen(false)}
                     />
                 </div>
             )}

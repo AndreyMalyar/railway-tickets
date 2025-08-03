@@ -16,7 +16,7 @@ interface CalendarProps {
 }
 
 
-function Calendar({ onDateSelect, onClose, selectedDate, mode }: CalendarProps) {
+function Calendar({ onDateSelect, onClose,  mode }: CalendarProps) {
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 

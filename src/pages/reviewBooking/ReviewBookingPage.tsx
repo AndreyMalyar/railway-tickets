@@ -6,6 +6,7 @@ import ApplyCode from "./ApplyCode.tsx";
 import ExtraBaggage from "./ExtraBaggage.tsx";
 import BillDetails from "./BillDetails.tsx";
 import BookingActions from "./BookingActions.tsx";
+import PassengerForm from "./PassengerForm.tsx";
 
 
 function ReviewBookingPage(){
@@ -15,6 +16,7 @@ function ReviewBookingPage(){
                 <div className="container container__content">
                     <h2 className="section__title ">Review your booking</h2>
                     <BoardingDetails/>
+                    <PassengerForm />
                     <FoodCard/>
                     <OffersSection/>
                     <div className="booking-extras">
