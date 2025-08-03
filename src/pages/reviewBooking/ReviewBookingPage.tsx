@@ -4,6 +4,8 @@ import FoodCard from "./FoodCard.tsx";
 import OffersSection from "./OffersSection.tsx";
 import ApplyCode from "./ApplyCode.tsx";
 import ExtraBaggage from "./ExtraBaggage.tsx";
+import BillDetails from "./BillDetails.tsx";
+import BookingActions from "./BookingActions.tsx";
 
 
 function ReviewBookingPage(){
@@ -19,6 +21,8 @@ function ReviewBookingPage(){
                         <ApplyCode/>
                         <ExtraBaggage/>
                     </div>
+                    <BillDetails />
+                    <BookingActions />
                 </div>
             </section>
         </main>

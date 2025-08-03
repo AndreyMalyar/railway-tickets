@@ -206,16 +206,87 @@
   }
 }
 
+.bill-details{
+  background-color: #fff;
+  border: 1px solid rgba(1, 4, 0, 0.5);
+  border-radius: 10px;
+  margin-top: 32px;
+  padding: 32px 24px;
 
+  &__title{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    color: #010400;
+  }
+  &__items{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0 24px;
+  }
+  &__total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    color: #010400;
+  }
+}
 
+.bill-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: rgba(1, 4, 0, 0.5);
+}
 
-
-
-
-
-
-
+.booking-actions{
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  &__description{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: rgba(1, 4, 0, 0.5);
+  }
+  &__btn{
+    width: 400px;
+    padding: 16px 0;
+    background: #5E4AE3;
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    outline: none;
+    &-cancel{
+      border: 1px solid #FF6060;
+      background: #fff;
+      color: #FF6060;
+    }
+  }
+  &__links{
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  &__link{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #808080;
+    text-transform: capitalize;
+  }
+}
 
 
 

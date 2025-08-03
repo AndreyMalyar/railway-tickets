@@ -1,6 +1,8 @@
 import createMockTrains from "../../data/trainData.ts";
 import { useNavigate } from "react-router-dom";
 import RouteInfo from "../../components/RouteInfo.tsx";
+import { useAppDispatch } from "../../store/hooks.ts";
+import { setSelectedTrain, setSelectedClass } from "../../store/slices/bookingSlice.ts";
 
 
 const trains = createMockTrains("New Delhi", "Lucknow", "Nov 16", "Nov 17");
@@ -18,8 +20,11 @@ const getClassColor = (type: ClassType) => {
 
 
 function TrainCards() {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const onClick = () => {
+    const onClick = (trainId: number, classType: string) => {
+        dispatch(setSelectedTrain(trainId.toString()));
+        dispatch(setSelectedClass(classType));
         navigate('/review-booking');
     }
 
@@ -35,7 +40,13 @@ function TrainCards() {
                         <RouteInfo departure={item.departure} arrival={item.arrival} duration={item.duration} />
                         <div className="train-card__class-list">
                             {item.classes.map(classItem => (
-                                <button type="button" onClick={onClick} key={classItem.type} style={{backgroundColor: getClassColor(classItem.type as ClassType)}} className="train-card__btn">
+                                <button
+                                    type="button"
+                                    onClick={() => onClick(item.id, classItem.type)}
+                                    key={classItem.type}
+                                    style={{backgroundColor: getClassColor(classItem.type as ClassType)}}
+                                    className="train-card__btn"
+                                >
                                     <span className="train-card__btn-content">{classItem.type}<span>{classItem.status} - {classItem.available}</span></span>
                                     <span className="train-card__btn-content">Tatkal<span className="train-card__btn-content_price">₹{classItem.price}</span></span>
                                 </button>
