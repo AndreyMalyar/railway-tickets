@@ -1,5 +1,6 @@
 import {useState, useRef, useEffect} from "react";
 import cities from "../../data/cityData.ts"
+import './styleCity.scss';
 
 
 interface ICityAutocomplete {
@@ -35,7 +36,7 @@ function CityAutocomplete({ value, onChange, placeholder, className, excludeCity
                 onChange={(e) => onChange(e.target.value)}
                 onFocus={() => setCityDropdownOpen(true)}
                 onBlur={() => {
-                    timeoutRef.current = setTimeout(() => setCityDropdownOpen(false), 500);
+                    timeoutRef.current = setTimeout(() => setCityDropdownOpen(false), 300);
                 }}
                 placeholder={placeholder}
                 className="city-autocomplete__input"

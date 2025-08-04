@@ -41,18 +41,26 @@ function Form(){
             />
 
             <fieldset className="form__fieldset">
-                <CityAutocomplete
-                    value={localDeparture}
-                    onChange={setLocalDeparture}
-                    placeholder="Your City/Station"
-                    excludeCity={localArrival}
-                />
-                <CityAutocomplete
-                    value={localArrival}
-                    onChange={setLocalArrival}
-                    placeholder="Where to?"
-                    excludeCity={localDeparture}
-                />
+                <label>
+                    Departure
+                    <CityAutocomplete
+                        value={localDeparture}
+                        onChange={setLocalDeparture}
+                        placeholder="Your City/Station"
+                        excludeCity={localArrival}
+                    />
+                </label>
+
+                <label>
+                    Arrival
+                    <CityAutocomplete
+                        value={localArrival}
+                        onChange={setLocalArrival}
+                        placeholder="Where to?"
+                        excludeCity={localDeparture}
+
+                    />
+                </label>
             </fieldset>
 
             <fieldset className="form__fieldset">
