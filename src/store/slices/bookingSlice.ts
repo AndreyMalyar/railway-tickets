@@ -13,6 +13,9 @@ interface BookingState {
     selectedFood: number | null;
     selectedPromoCode: string | null;
     extraBaggage: boolean;
+    passengerName: string;
+    passengerEmail: string;
+
 }
 
 const initialState: BookingState = {
@@ -27,6 +30,8 @@ const initialState: BookingState = {
     selectedFood: null,
     selectedPromoCode: null,
     extraBaggage: false,
+    passengerName: '',
+    passengerEmail: '',
 }
 
 export const bookingSlice  = createSlice({
@@ -65,6 +70,12 @@ export const bookingSlice  = createSlice({
         },
         setExtraBaggage: (state, action: PayloadAction<boolean>) => {
             state.extraBaggage = action.payload;
+        },
+        setPassengerName: (state, action: PayloadAction<string>) => {
+            state.passengerName = action.payload;
+        },
+        setPassengerEmail: (state, action: PayloadAction<string>) => {
+            state.passengerEmail = action.payload;
         }
     }
 })
@@ -81,6 +92,8 @@ export const {
     setSelectedFood,
     setSelectedPromoCode,
     setExtraBaggage,
+    setPassengerName,
+    setPassengerEmail,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
