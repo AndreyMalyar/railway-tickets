@@ -1,4 +1,5 @@
 import GlobsButton from "../../components/GlobsButton.tsx";
+import BookingActionsLinks from "../../components/BookingActionsLinks.tsx";
 
 
 function BookingActions(){
@@ -7,11 +8,7 @@ function BookingActions(){
             <p className="booking-actions__description">Discounts, offers and price concessions will be applied later during payment</p>
             <GlobsButton className="booking-actions__btn" label="Book Now" />
             <GlobsButton className="booking-actions__btn booking-actions__btn-cancel" label="Cancel" />
-            <div className="booking-actions__links">
-                <a href="#" className="booking-actions__link">Cancellation Policy</a>
-                <a href="#" className="booking-actions__link">Terms & Conditions</a>
-                <a href="#" className="booking-actions__link">Travel Insurance</a>
-            </div>
+            <BookingActionsLinks />
         </div>
     )
 }
