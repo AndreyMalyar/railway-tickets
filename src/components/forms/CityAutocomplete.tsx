@@ -6,13 +6,15 @@ import './styleCity.scss';
 interface ICityAutocomplete {
     value: string;
     onChange: (value: string) => void;
+    onValidationChange: (isValid: boolean) => void;
     placeholder?: string;
     className?: string;
     excludeCity?: string; // исключить этот город из списка
 }
 
-function CityAutocomplete({ value, onChange, placeholder, className, excludeCity }: ICityAutocomplete) {
+function CityAutocomplete({ value, onChange, onValidationChange, placeholder, className, excludeCity }: ICityAutocomplete) {
     const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+    const [hasError, setHasError] = useState(false)
     const timeoutRef = useRef<number | null>(null);
 
     const filteredCities = cities
@@ -33,13 +35,21 @@ function CityAutocomplete({ value, onChange, placeholder, className, excludeCity
             <input
                 type="text"
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => {
+                    let inputValue = e.target.value;
+                    inputValue = inputValue.replace(/[а-яё]/gi, '');
+                    if(inputValue.length > 0) { inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1); }
+                    onChange(inputValue);
+                }}
                 onFocus={() => setCityDropdownOpen(true)}
                 onBlur={() => {
                     timeoutRef.current = setTimeout(() => setCityDropdownOpen(false), 300);
+                    const isValid = value.trim() !== '' && cities.some(city => city.name === value)
+                    setHasError(!isValid);
+                    onValidationChange(isValid)
                 }}
                 placeholder={placeholder}
-                className="city-autocomplete__input"
+                className={`city-autocomplete__input ${hasError ? 'city-autocomplete__input--error' : ''}`}
             />
 
             {cityDropdownOpen && value.length > 0 && filteredCities.length > 0 && (
@@ -50,6 +60,9 @@ function CityAutocomplete({ value, onChange, placeholder, className, excludeCity
                             onClick={() => {
                                 onChange(city.name);
                                 setCityDropdownOpen(false);
+                                // Сбрасываем ошибку при выборе города из списка
+                                setHasError(false);
+                                onValidationChange(true);
                             }}
                             className="city-autocomplete__item"
                         >

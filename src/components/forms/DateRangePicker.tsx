@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Calendar from './Calendar';
 
 interface DateRangePickerProps {
@@ -7,6 +7,7 @@ interface DateRangePickerProps {
     returnDisabled?: boolean;
     onDepartChange: (date: string) => void;
     onReturnChange: (date: string) => void;
+    onValidationChange: (isValid: boolean) => void;
 }
 
 
@@ -16,8 +17,25 @@ const calendarIcon = <svg width="16" height="24" viewBox="0 0 16 20" xmlns="http
 </svg>
 
 
-function DateRangePicker({departValue, returnValue, returnDisabled = false, onDepartChange, onReturnChange}: DateRangePickerProps) {
+function DateRangePicker({departValue, returnValue, returnDisabled = false, onDepartChange, onReturnChange, onValidationChange}: DateRangePickerProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
+    // Функция валидации
+    const validateDates = () => {
+        const isDepartValid = departValue.trim() !== '';
+        const isReturnValid = returnDisabled || returnValue.trim() !== '';
+        const isValid = isDepartValid && isReturnValid;
+
+        setHasError(!isValid);
+        onValidationChange(isValid);
+        return isValid;
+    };
+
+    // Валидация при изменении значений
+    useEffect(() => {
+        validateDates();
+    }, [departValue, returnValue, returnDisabled]);
 
     const handleDateSelect = (departDate: string, returnDate?: string) => {
         onDepartChange(departDate);
@@ -27,14 +45,25 @@ function DateRangePicker({departValue, returnValue, returnDisabled = false, onDe
         // НЕ закрываем здесь - только по Apply!
     };
 
+    const handleClose = () => {
+        setIsOpen(false);
+        // Валидируем при закрытии календаря
+        setTimeout(() => {
+            validateDates();
+        }, 0);
+    };
+
     return (
         <div className="date-range-picker">
             <div className="date-range-picker__inputs">
-                <div className="date-range-picker__input" onClick={() => setIsOpen(true)}>
+                <div className={`date-range-picker__input ${hasError && !departValue ? 'date-range-picker__input--error' : ''} ${hasError && !returnDisabled && !returnValue ? 'date-range-picker__input--error' : ''}`}
+                     onClick={() => setIsOpen(true)}>
                     <span>{calendarIcon}</span>
                     <span>{departValue || 'Depart'}</span>
                 </div>
-                <div className={`date-range-picker__input ${returnDisabled ? 'date-range-picker__input--disabled' : ''}`}
+                <div className={`date-range-picker__input 
+                        ${returnDisabled ? 'date-range-picker__input--disabled' : ''}
+                        ${hasError && !returnDisabled && !returnValue ? 'date-range-picker__input--error' : ''}`}
                      onClick={() => !returnDisabled && setIsOpen(true)} // не открываем если disabled
                 >
                     <span>{calendarIcon}</span>
@@ -46,7 +75,7 @@ function DateRangePicker({departValue, returnValue, returnDisabled = false, onDe
                 <div className="date-range-picker__calendar">
                     <Calendar
                         onDateSelect={handleDateSelect}
-                        onClose={() => setIsOpen(false)}
+                        onClose={handleClose}
                         mode={returnDisabled ? 'single' : 'range'}  // меняем mode в зависимости от состояния
                     />
                 </div>

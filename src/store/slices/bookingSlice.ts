@@ -86,7 +86,6 @@ export const {
     setArrival,
     setDepartureDate,
     setReturnDate,
-    setPassenger,
     setSelectedTrain,
     setSelectedClass,
     setSelectedFood,
