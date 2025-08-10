@@ -15,7 +15,7 @@ interface BookingState {
     extraBaggage: boolean;
     passengerName: string;
     passengerEmail: string;
-
+    totalPrice: number;
 }
 
 const initialState: BookingState = {
@@ -32,6 +32,7 @@ const initialState: BookingState = {
     extraBaggage: false,
     passengerName: '',
     passengerEmail: '',
+    totalPrice: 0,
 }
 
 export const bookingSlice  = createSlice({
@@ -76,6 +77,9 @@ export const bookingSlice  = createSlice({
         },
         setPassengerEmail: (state, action: PayloadAction<string>) => {
             state.passengerEmail = action.payload;
+        },
+        setTotalPrice: (state, action: PayloadAction<number>) => {
+            state.totalPrice = action.payload;
         }
     }
 })
@@ -93,6 +97,7 @@ export const {
     setExtraBaggage,
     setPassengerName,
     setPassengerEmail,
+    setTotalPrice,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

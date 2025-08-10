@@ -36,10 +36,10 @@ function ReviewBookingPage(){
                 <div className="container container__content">
                     <h2 className="section__title ">Review your booking</h2>
 
-                    {/* Отладочный блок */}
-                    <pre>{JSON.stringify(booking, null, 2)}</pre>
+                    <div className="details-box">
+                        <BoardingDetails/>
+                    </div>
 
-                    <BoardingDetails/>
                     <PassengerForm />
                     <FoodCard/>
                     <OffersSection/>
