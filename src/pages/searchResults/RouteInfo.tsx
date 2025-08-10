@@ -1,5 +1,5 @@
-import type {TrainStation} from "../data/trainData.ts";
-import { formatDate } from "../utilits/dateFormatter"
+import type {TrainStation} from "../../data/trainData.ts";
+import { formatDate } from "../../utilits/dateFormatter.ts"
 
 type RouteInfoType = {
     departure: TrainStation;

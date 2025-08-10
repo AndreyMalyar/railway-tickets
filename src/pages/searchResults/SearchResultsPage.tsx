@@ -13,7 +13,9 @@ import Loader from "../../components/Loader.tsx";
 function SearchResultsPage(){
     const booking = useAppSelector(state => state.booking);
     const navigate = useNavigate();
-    const { loadingMessage, hasRequiredData } = useRailwayData(['cities'])
+    const { loadingMessage: citiesLoading, hasRequiredData: hasCities } = useRailwayData(['cities'])
+    const { loadingMessage: promoLoading, hasRequiredData: hasPromo } = useRailwayData(['promo'])
+    const { loadingMessage: trainDataLoading, hasRequiredData: hastrainData } = useRailwayData(['trainData'])
 
 
     useEffect(() => {
@@ -32,9 +34,10 @@ function SearchResultsPage(){
                 <section className="section section__search-results">
                     <h2 className="section__title">Search Results</h2>
 
-                    {hasRequiredData ? <Form/> : <Loader message={loadingMessage} height={"100px"} />}
-                    <AdBanner />
-                    <TrainCards/>
+                    {hasCities ? <Form/> : <Loader message={citiesLoading} height={"100px"} />}
+                    {hasPromo ? <AdBanner /> : <Loader message={promoLoading} height={"100px"} />}
+                    {hastrainData ? <TrainCards/> : <Loader message={trainDataLoading} height={"100px"} />}
+
                 </section>
             </div>
         </main>

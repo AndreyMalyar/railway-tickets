@@ -1,8 +1,7 @@
-import RouteInfo from "../../components/RouteInfo.tsx";
+import RouteInfo from "./RouteInfo.tsx";
 import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
 import { setSelectedTrain, setSelectedClass } from "../../store/slices/bookingSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { useRailwayData } from "../../hooks/useRailwayData.ts";
 import {calculateArrival} from "../../utilits/calculateArrival.ts";
 
 type ClassType = "3A" | "2A" | "1A";
@@ -23,22 +22,13 @@ function TrainCards() {
     const { departure, arrival, departureDate } = useAppSelector(state => state.booking);
 
     // Данные поездов
-    const { trainData, isLoading } = useAppSelector(state => state.railway);
-    const { hasRequiredData } = useRailwayData(['trainData']);
+    const { trainData } = useAppSelector(state => state.railway);
 
 
     const onClick = (trainId: number, classType: string) => {
         dispatch(setSelectedTrain(trainId.toString()));
         dispatch(setSelectedClass(classType));
         navigate('/review-booking');
-    }
-
-    if (isLoading || !hasRequiredData) {
-        return <div>Loading trains...</div>;
-    }
-
-    if (trainData.length === 0) {
-        return <div>No trains found</div>;
     }
 
 
