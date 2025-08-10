@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import RouteInfo from "../../components/RouteInfo.tsx";
 import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
 import { setSelectedTrain, setSelectedClass } from "../../store/slices/bookingSlice.ts";
-import { fetchTrains } from "../../store/slices/trainsSlice.ts";
 import { useNavigate } from "react-router-dom";
+import { useRailwayData } from "../../hooks/useRailwayData.ts";
+import {calculateArrival} from "../../utilits/calculateArrival.ts";
 
 type ClassType = "3A" | "2A" | "1A";
 const getClassColor = (type: ClassType) => {
@@ -22,20 +22,10 @@ function TrainCards() {
     // Данные для запроса из booking
     const { departure, arrival, departureDate } = useAppSelector(state => state.booking);
 
-    // Данные поездов из trains slice
-    const { data: trains, status, error } = useAppSelector(state => state.trains);
+    // Данные поездов
+    const { trainData, isLoading } = useAppSelector(state => state.railway);
+    const { hasRequiredData } = useRailwayData(['trainData']);
 
-    // Загружаем поезда при изменении параметров
-    useEffect(() => {
-        if (departure && arrival && departureDate) {
-            dispatch(fetchTrains({ departure, arrival, departureDate }));
-        }
-    }, [dispatch, departure, arrival, departureDate]);
-
-    // Выводим в консоль что получилось
-    console.log('Trains data:', trains);
-    console.log('Status:', status);
-    console.log('Error:', error);
 
     const onClick = (trainId: number, classType: string) => {
         dispatch(setSelectedTrain(trainId.toString()));
@@ -43,24 +33,45 @@ function TrainCards() {
         navigate('/review-booking');
     }
 
-    if (status === 'loading') {
+    if (isLoading || !hasRequiredData) {
         return <div>Loading trains...</div>;
     }
 
-    if (status === 'failure') {
-        return <div>Error: {error}</div>;
+    if (trainData.length === 0) {
+        return <div>No trains found</div>;
     }
+
 
     return (
         <div className="train-cards">
             <h2 className="train-cards__title">Available Trains</h2>
             <div className="train-cards__box">
-                {trains.map(item => (
+                {trainData.map(item => {
+                    const { arrivalTime, arrivalDate } = calculateArrival(
+                        departureDate,
+                        item.departure.time,
+                        item.duration
+                    );
+
+                    return (
                     <div className="train-card" key={item.id}>
                         <p className="train-card__title">{item.number} – {item.name}</p>
                         <p className="train-card__runsOn">Runs on</p>
                         <p className="train-card__runsOn-description">{item.runsOn}</p>
-                        <RouteInfo departure={item.departure} arrival={item.arrival} duration={item.duration} />
+                        <RouteInfo
+                            departure={{
+                                ...item.departure,
+                                date: departureDate,
+                                station: departure
+                            }}
+                            arrival={{
+                                ...item.arrival,
+                                time: arrivalTime,           // расчетное время прибытия
+                                date: arrivalDate,           // расчетная дата прибытия
+                                station: arrival,
+                            }}
+                            duration={item.duration}
+                        />
                         <div className="train-card__class-list">
                             {item.classes.map(classItem => (
                                 <button
@@ -81,7 +92,7 @@ function TrainCards() {
                             ))}
                         </div>
                     </div>
-                ))}
+                )})}
             </div>
         </div>
     )

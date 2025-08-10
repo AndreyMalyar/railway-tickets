@@ -1,4 +1,5 @@
 import type {TrainStation} from "../data/trainData.ts";
+import { formatDate } from "../utilits/dateFormatter"
 
 type RouteInfoType = {
     departure: TrainStation;
@@ -13,7 +14,7 @@ function RouteInfo({departure, arrival, duration}: RouteInfoType){
     const showTrainStation = (item: TrainStation) => {
         return (
             <>
-                <p className="routeInfo-item__data">{item.date}</p>
+                <p className="routeInfo-item__data">{formatDate(item.date)}</p>
                 <p className="routeInfo-item__time">{item.time}</p>
                 <p className="routeInfo-item__station">{item.station}</p>
             </>
