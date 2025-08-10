@@ -30,6 +30,10 @@
       left: 25px;
       top: 50%;
       transform: translateY(-50%);
+      transition: 0.2s;
+      &:hover{
+        font-size: 22px;
+      }
     }
     &-icon{
       margin-left: 10px;
@@ -127,6 +131,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    cursor: pointer;
 
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
     transition: all 0.2s ease;
@@ -142,7 +147,7 @@
       line-height: 18px;
       color: #010400;
 
-      &_price{
+      &_select{
         font-size: 18px;
       }
     }

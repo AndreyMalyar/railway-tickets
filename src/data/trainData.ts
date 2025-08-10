@@ -36,13 +36,13 @@ const createMockTrains = (
         runsOn: "Everyday",
         departure: {
             time: "11:25 pm",
-            station: departure || "New Delhi - NDLS", // fallback для верстки
-            date: departureDate || "Nov 16"
+            station: departure,
+            date: departureDate
         },
         arrival: {
             time: "7:25 am",
-            station: arrival || "Lucknow - LJN",
-            date: returnDate || "Nov 17"
+            station: arrival,
+            date: returnDate
         },
         duration: "8 hours",
         classes: [
@@ -58,13 +58,13 @@ const createMockTrains = (
         runsOn: "Everyday",
         departure: {
             time: "11:45 pm",
-            station: departure || "New Delhi - NDLS",
-            date: departureDate || "Nov 16"
+            station: departure,
+            date: departureDate
         },
         arrival: {
             time: "7:45 am",
-            station: arrival || "Lucknow - LJN",
-            date: returnDate || "Nov 17"
+            station: arrival,
+            date: returnDate
         },
         duration: "8 hours",
         classes: [
@@ -80,13 +80,13 @@ const createMockTrains = (
         runsOn: "Everyday",
         departure: {
             time: "11:50 pm",
-            station: departure || "New Delhi - NDLS",
-            date: departureDate || "Nov 16"
+            station: departure,
+            date: departureDate
         },
         arrival: {
             time: "9:50 am",
-            station: arrival || "Lucknow - LJN",
-            date: returnDate || "Nov 17"
+            station: arrival,
+            date: returnDate
         },
         duration: "10 hours",
         classes: [

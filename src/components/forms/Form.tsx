@@ -40,7 +40,7 @@ function Form(){
 
 
     return (
-        <>
+        <div className="form__wrap">
             {!isFormValid && (
                 <div className="form__error">
                     Проверьте правильность заполнения формы
@@ -104,7 +104,7 @@ function Form(){
                     disabled={!isFormValid}
                 />
             </form>
-        </>
+        </div>
 
     )
 }

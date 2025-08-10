@@ -19,10 +19,10 @@ function BillDetails(){
 
     // Получить данные поездов
     const trains = createMockTrains(
-        departure || "New Delhi",
-        arrival || "Lucknow",
-        departureDate || "Nov 16",
-        returnDate || "Nov 17"
+        departure,
+        arrival,
+        departureDate,
+        returnDate
     );
     // Найти выбранный поезд
     const selectedTrainData = trains.find(train => train.id.toString() === selectedTrain);

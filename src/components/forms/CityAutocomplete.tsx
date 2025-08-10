@@ -1,7 +1,6 @@
 import {useState, useRef, useEffect} from "react";
-import cities from "../../data/cityData.ts"
 import './styleCity.scss';
-
+import { useAppSelector } from "../../store/hooks.ts";
 
 interface ICityAutocomplete {
     value: string;
@@ -9,17 +8,28 @@ interface ICityAutocomplete {
     onValidationChange: (isValid: boolean) => void;
     placeholder?: string;
     className?: string;
-    excludeCity?: string; // исключить этот город из списка
+    excludeCity?: string;
 }
 
 function CityAutocomplete({ value, onChange, onValidationChange, placeholder, className, excludeCity }: ICityAutocomplete) {
     const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
     const [hasError, setHasError] = useState(false)
     const timeoutRef = useRef<number | null>(null);
+    const { cities } = useAppSelector(state => state.railway)
+
+    const getCityNameFromValue = (val: string) => {
+        return val.includes(' - ') ? val.split(' - ')[0] : val;
+    }
+
+    const inputCityName = getCityNameFromValue(value);
 
     const filteredCities = cities
-        .filter(city => city.name.toLowerCase().startsWith(value.toLowerCase()))
-        .filter(city => !excludeCity || city.name !== excludeCity) // исключаем выбранный город
+        .filter(city => city.name.toLowerCase().startsWith(inputCityName.toLowerCase()))
+        .filter(city => {
+            if (!excludeCity) return true;
+            const excludeCityName = getCityNameFromValue(excludeCity);
+            return city.name !== excludeCityName;
+        })
         .slice(0, 4);
 
     useEffect(() => {
@@ -34,7 +44,7 @@ function CityAutocomplete({ value, onChange, onValidationChange, placeholder, cl
         <div className={`city-autocomplete ${className || ''}`}>
             <input
                 type="text"
-                value={value}
+                value={inputCityName}
                 onChange={(e) => {
                     let inputValue = e.target.value;
                     inputValue = inputValue.replace(/[а-яё]/gi, '');
@@ -44,7 +54,7 @@ function CityAutocomplete({ value, onChange, onValidationChange, placeholder, cl
                 onFocus={() => setCityDropdownOpen(true)}
                 onBlur={() => {
                     timeoutRef.current = setTimeout(() => setCityDropdownOpen(false), 300);
-                    const isValid = value.trim() !== '' && cities.some(city => city.name === value)
+                    const isValid = inputCityName.trim() !== '' && cities.some(city => city.name === inputCityName);
                     setHasError(!isValid);
                     onValidationChange(isValid)
                 }}
@@ -52,15 +62,15 @@ function CityAutocomplete({ value, onChange, onValidationChange, placeholder, cl
                 className={`city-autocomplete__input ${hasError ? 'city-autocomplete__input--error' : ''}`}
             />
 
-            {cityDropdownOpen && value.length > 0 && filteredCities.length > 0 && (
+            {cityDropdownOpen && inputCityName.length > 0 && filteredCities.length > 0 && (
                 <ul className="city-autocomplete__dropdown">
                     {filteredCities.map(city => (
                         <li
                             key={city.id}
                             onClick={() => {
-                                onChange(city.name);
+                                const cityWithCode = `${city.name} - ${city.code}`;
+                                onChange(cityWithCode);
                                 setCityDropdownOpen(false);
-                                // Сбрасываем ошибку при выборе города из списка
                                 setHasError(false);
                                 onValidationChange(true);
                             }}

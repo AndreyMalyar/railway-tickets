@@ -1,5 +1,7 @@
 @use './base/vars' as *;
 
+@use "./component/loader";
+
 *{
   margin: 0;
   padding: 0;
@@ -100,9 +102,6 @@ body{
     color: #90A3BF;
   }
 }
-
-
-
 
 
 

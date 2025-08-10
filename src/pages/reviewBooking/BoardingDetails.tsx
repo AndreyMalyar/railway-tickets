@@ -1,25 +1,43 @@
 import RouteInfo from "../../components/RouteInfo.tsx";
-
-
-
-
-const departure = {
-    time: "11:25 pm",
-    station: 'New Delhi - NDLS',
-    date: "Nov 16"
-}
-const arrival = {
-    time: "7:25 am",
-    station: 'Lucknow - LJN',
-    date: "Nov 17"
-}
+import { useAppSelector } from "../../store/hooks.ts";
+import createMockTrains from "../../data/trainData"
+import { formatDate } from "../../utilits/dateFormatter"
 
 function BoardingDetails (){
+    const {departure, arrival, departureDate, returnDate, selectedTrain, selectedClass} = useAppSelector(state => state.booking);
+
+    const trains = createMockTrains(departure, arrival, departureDate, returnDate);
+    const selectedTrainData = trains.find(train => train.id.toString() === selectedTrain);
+
+    if (!selectedTrainData) {
+        return <div className="review">Train not found</div>;
+    }
+
+    const selectedNameData = `${selectedTrainData.number} - ${selectedTrainData.name}`;
+
+    // Форматируем даты в объектах departure и arrival
+    const formattedDeparture = {
+        ...selectedTrainData.departure,
+        date: formatDate(selectedTrainData.departure.date)
+    };
+
+    const formattedArrival = {
+        ...selectedTrainData.arrival,
+        date: formatDate(selectedTrainData.arrival.date)
+    };
+
     return (
         <div className="review">
             <h3 className="review__title">Boarding Details</h3>
-            <p className="review__train-info">22426 - VANDE BHARAT<span className="review__train-class">Class 2A & Tatkal Quota</span></p>
-            {<RouteInfo departure={departure} arrival={arrival} duration={"8 hours"}/>}
+            <p className="review__train-info">
+                {selectedNameData}
+                <span className="review__train-class">Class {selectedClass} & Tatkal Quota</span>
+            </p>
+            <RouteInfo
+                departure={formattedDeparture}
+                arrival={formattedArrival}
+                duration={selectedTrainData.duration}
+            />
         </div>
     )
 }
