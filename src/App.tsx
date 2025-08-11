@@ -16,6 +16,7 @@ import PaymentPage from "./pages/payment/PaymentPage.tsx";
 
 function App() {
     const location = useLocation();
+
     const dispatch = useAppDispatch();
     const theme = useAppSelector(state => state.ui.theme);
 
@@ -27,6 +28,7 @@ function App() {
             dispatch(setTheme('light'));
         }
     }, [location.pathname, dispatch]);
+
 
 
     const getPageConfig = (currentTheme: 'light' | 'dark', pathname: string): PageConfig => {

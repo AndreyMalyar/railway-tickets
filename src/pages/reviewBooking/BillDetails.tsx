@@ -1,13 +1,13 @@
-import { useAppSelector } from "../../store/hooks";
-import createMockTrains from "../../data/trainData"
-import foodData from "../../data/foodData";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { setTotalPrice } from "../../store/slices/bookingSlice";
+import { useRailwayData } from "../../hooks/useRailwayData";
+import Loader from "../../components/Loader";
+import { useEffect } from "react";
+
 
 function BillDetails(){
+    const dispatch = useAppDispatch();
     const {
-        departure,
-        arrival,
-        departureDate,
-        returnDate,
         selectedTrain,
         selectedClass,
         selectedFood,
@@ -17,21 +17,26 @@ function BillDetails(){
         selectedPromoCode
     } = useAppSelector(state => state.booking)
 
-    // Получить данные поездов
-    const trains = createMockTrains(
-        departure || "New Delhi",
-        arrival || "Lucknow",
-        departureDate || "Nov 16",
-        returnDate || "Nov 17"
-    );
+    // Получаем данные из store
+    const { trainData, food } = useAppSelector(state => state.railway);
+    const { loadingMessage: trainLoading, hasRequiredData: hasTrains } = useRailwayData(['trainData']);
+    const { loadingMessage: foodLoading, hasRequiredData: hasFood } = useRailwayData(['food']);
+
+    // Если данных нет - показываем лоадер
+    if (!hasTrains || !hasFood) {
+        return <Loader message={hasTrains ? foodLoading : trainLoading} height="200px" />;
+    }
+
+
     // Найти выбранный поезд
-    const selectedTrainData = trains.find(train => train.id.toString() === selectedTrain);
-    // Найти выбранный класс в этом поезде
+    const selectedTrainData = trainData.find(train => train.id.toString() === selectedTrain);
     const selectedClassData = selectedTrainData?.classes.find(cls => cls.type === selectedClass);
+    // Найти выбранную еду из нового store
+    const selectedFoodData = selectedFood ? food.find(item => item.id === selectedFood) : null;
+
     // расчет стоимости билетов в одну или в обе стороны
     const baseTicketPrice = selectedClassData ? selectedClassData.price * passenger * (tripType === 'roundTrip' ? 2 : 1) : 0;
 
-    const selectedFoodData = selectedFood ? foodData.find(food => food.id === selectedFood) : null;
     const foodPrice = selectedFoodData ? selectedFoodData.price : 0;
     const foodTitle = selectedFoodData ? selectedFoodData.title : '';
 
@@ -51,6 +56,10 @@ function BillDetails(){
 
     const totalCharge = subtotal + taxAmount - discountAmount;
 
+    useEffect(() => {
+        dispatch(setTotalPrice(totalCharge));
+    }, [totalCharge, dispatch]);
+
     return (
         <div className="bill-details">
             <h3 className="bill-details__title">Bill details</h3>
@@ -60,7 +69,7 @@ function BillDetails(){
                     <span className="bill-item__price">₹{baseTicketPrice}</span>
                 </div>
                 <div className="bill-item">
-                    <span className="bill-item__label">{foodTitle}</span>
+                    <span className="bill-item__label">{foodTitle || 'No food selected'}</span>
                     <span className="bill-item__price">₹{foodPrice}</span>
                 </div>
                 <div className="bill-item">

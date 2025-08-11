@@ -2,7 +2,7 @@
 
 .form{
   max-width: 100%;
-  margin: 60px auto 0;
+  margin: 20px auto 0;
   color: $text-on-light;
 
   &__fieldset {
@@ -80,6 +80,29 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 30px;
+    cursor: pointer;
+
+    &:disabled{
+      opacity: 0.5;
+      cursor: not-allowed;
+      z-index: 0;
+    }
+  }
+
+  &__wrap{
+    margin-top: 40px;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+  }
+  &__error{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: red;
   }
 }
 
@@ -107,6 +130,10 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 150%;
+
+  &--error{
+    border: 2px solid red;
+  }
 }
 
 .date-range-picker__input--disabled {

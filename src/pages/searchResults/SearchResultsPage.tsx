@@ -3,17 +3,41 @@ import AdBanner from "./AdBanner.tsx";
 import "./styleSearchResults.scss"
 import TrainCards from "./TrainCard.tsx";
 
+import { useAppSelector } from "../../store/hooks";
+import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {useRailwayData} from "../../hooks/useRailwayData.ts";
+import Loader from "../../components/Loader.tsx";
+
 
 function SearchResultsPage(){
+    const booking = useAppSelector(state => state.booking);
+    const navigate = useNavigate();
+    const { loadingMessage: citiesLoading, hasRequiredData: hasCities } = useRailwayData(['cities'])
+    const { loadingMessage: promoLoading, hasRequiredData: hasPromo } = useRailwayData(['promo'])
+    const { loadingMessage: trainDataLoading, hasRequiredData: hastrainData } = useRailwayData(['trainData'])
+
+
+    useEffect(() => {
+        // Проверка наличия данных
+        if (!booking.departure || !booking.arrival || !booking.departureDate) {
+            // редиректить обратно
+            navigate('/', { replace: true });
+        }
+    }, []);
+
+
 
     return (
         <main>
             <div className="container container__content">
                 <section className="section section__search-results">
                     <h2 className="section__title">Search Results</h2>
-                    <Form/>
-                    <AdBanner/>
-                    <TrainCards/>
+
+                    {hasCities ? <Form/> : <Loader message={citiesLoading} height={"100px"} />}
+                    {hasPromo ? <AdBanner /> : <Loader message={promoLoading} height={"100px"} />}
+                    {hastrainData ? <TrainCards/> : <Loader message={trainDataLoading} height={"100px"} />}
+
                 </section>
             </div>
         </main>

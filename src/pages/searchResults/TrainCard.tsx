@@ -1,12 +1,8 @@
-import createMockTrains from "../../data/trainData.ts";
-import { useNavigate } from "react-router-dom";
-import RouteInfo from "../../components/RouteInfo.tsx";
-import { useAppDispatch } from "../../store/hooks.ts";
+import RouteInfo from "./RouteInfo.tsx";
+import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
 import { setSelectedTrain, setSelectedClass } from "../../store/slices/bookingSlice.ts";
-
-
-const trains = createMockTrains("New Delhi", "Lucknow", "Nov 16", "Nov 17");
-
+import { useNavigate } from "react-router-dom";
+import {calculateArrival} from "../../utilits/calculateArrival.ts";
 
 type ClassType = "3A" | "2A" | "1A";
 const getClassColor = (type: ClassType) => {
@@ -18,26 +14,54 @@ const getClassColor = (type: ClassType) => {
     return colors[type]
 }
 
-
 function TrainCards() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
+    // Данные для запроса из booking
+    const { departure, arrival, departureDate } = useAppSelector(state => state.booking);
+
+    // Данные поездов
+    const { trainData } = useAppSelector(state => state.railway);
+
+
     const onClick = (trainId: number, classType: string) => {
         dispatch(setSelectedTrain(trainId.toString()));
         dispatch(setSelectedClass(classType));
         navigate('/review-booking');
     }
 
+
     return (
         <div className="train-cards">
             <h2 className="train-cards__title">Available Trains</h2>
             <div className="train-cards__box">
-                {trains.map(item => (
+                {trainData.map(item => {
+                    const { arrivalTime, arrivalDate } = calculateArrival(
+                        departureDate,
+                        item.departure.time,
+                        item.duration
+                    );
+
+                    return (
                     <div className="train-card" key={item.id}>
                         <p className="train-card__title">{item.number} – {item.name}</p>
                         <p className="train-card__runsOn">Runs on</p>
                         <p className="train-card__runsOn-description">{item.runsOn}</p>
-                        <RouteInfo departure={item.departure} arrival={item.arrival} duration={item.duration} />
+                        <RouteInfo
+                            departure={{
+                                ...item.departure,
+                                date: departureDate,
+                                station: departure
+                            }}
+                            arrival={{
+                                ...item.arrival,
+                                time: arrivalTime,           // расчетное время прибытия
+                                date: arrivalDate,           // расчетная дата прибытия
+                                station: arrival,
+                            }}
+                            duration={item.duration}
+                        />
                         <div className="train-card__class-list">
                             {item.classes.map(classItem => (
                                 <button
@@ -47,15 +71,19 @@ function TrainCards() {
                                     style={{backgroundColor: getClassColor(classItem.type as ClassType)}}
                                     className="train-card__btn"
                                 >
-                                    <span className="train-card__btn-content">{classItem.type}<span>{classItem.status} - {classItem.available}</span></span>
-                                    <span className="train-card__btn-content">Tatkal<span className="train-card__btn-content_price">₹{classItem.price}</span></span>
+                                    <span className="train-card__btn-content">
+                                        <span className="train-card__btn-content_select">{classItem.type}</span>
+                                        {classItem.status} - {classItem.available}
+                                    </span>
+                                    <span className="train-card__btn-content">
+                                        Tatkal<span className="train-card__btn-content_select">₹{classItem.price}</span>
+                                    </span>
                                 </button>
                             ))}
                         </div>
                     </div>
-                ))}
+                )})}
             </div>
-
         </div>
     )
 }

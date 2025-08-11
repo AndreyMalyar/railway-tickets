@@ -1,18 +1,18 @@
-import AdData from "../../data/promo.ts";
+import {useAppSelector} from "../../store/hooks.ts";
 
 const arrowIcon = <svg width="9" height="10" viewBox="0 0 9 10" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 0H3.17181L8.23789 5L3.17181 10H0L5.08811 5L0 0Z"/>
 </svg>
 
-
 function AdBanner() {
+    const { promo } = useAppSelector(state => state.railway)
     return (
         <div className="banners">
             <div className="banners__box">
-                {AdData.map(item => (
+                {promo?.map(item => (
                     <div key={item.id} className="banners__item">
                         <a href="#" className="banners__item-link">{item.title}<span className="banners__item-icon">{arrowIcon}</span></a>
-                        <img className="banners__item-img" src={item.image} alt={item.title}/>
+                        <img className="banners__item-img" src={`https://railway-tickets-api.onrender.com${item.image}`} alt={item.title} />
                     </div>
                 ))}
             </div>

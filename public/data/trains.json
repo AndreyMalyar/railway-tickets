@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "number": "22426",
+    "name": "VANDE BHARAT",
+    "runsOn": "Everyday",
+    "departureTime": "23:25",
+    "durationHours": 8,
+    "classes": [
+      { "type": "3A", "status": "Avl", "available": "046", "price": 900 },
+      { "type": "2A", "status": "Avl", "available": "006", "price": 1000 },
+      { "type": "1A", "status": "WL", "available": "36", "price": 1200 }
+    ]
+  },
+  {
+    "id": 2,
+    "number": "22412",
+    "name": "ARUNACHAL EXP",
+    "runsOn": "Everyday",
+    "departureTime": "23:45",
+    "durationHours": 8,
+    "classes": [
+      { "type": "3A", "status": "Avl", "available": "446", "price": 800 },
+      { "type": "2A", "status": "Avl", "available": "166", "price": 1000 },
+      { "type": "1A", "status": "WL", "available": "6", "price": 1400 }
+    ]
+  },
+  {
+    "id": 3,
+    "number": "12572",
+    "name": "SHATABDI EXPRESS",
+    "runsOn": "Everyday",
+    "departureTime": "23:50",
+    "durationHours": 10,
+    "classes": [
+      { "type": "3A", "status": "Avl", "available": "446", "price": 800 },
+      { "type": "2A", "status": "Avl", "available": "166", "price": 1000 }
+    ]
+  }
+]
