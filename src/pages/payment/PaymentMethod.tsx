@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup"
 import type { ChangeEvent } from "react";
 import {masterCard, visa, security} from "./icons";
+import {useNavigate} from "react-router-dom";
 
 const CreditCardSchema = Yup.object({
     cardNumber: Yup.string()
@@ -16,6 +17,7 @@ const CreditCardSchema = Yup.object({
 })
 
 function PaymentMethod() {
+    const navigate = useNavigate();
 
     const formatCardNumber = (value: string) => {
         const cleanValue = value.replace(/\D/g, '');
@@ -58,6 +60,7 @@ function PaymentMethod() {
         validationSchema: CreditCardSchema,
         onSubmit: (values) => {
             console.log(values)
+            navigate('/success');
         }
     })
 

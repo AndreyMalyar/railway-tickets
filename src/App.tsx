@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import NotFoundPage from "./pages/404-Page/NotFoundPage.tsx";
 import ReviewBookingPage from "./pages/reviewBooking/ReviewBookingPage.tsx";
 import PaymentPage from "./pages/payment/PaymentPage.tsx";
+import SuccessPage from "./pages/success/SuccesPage.tsx";
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
 
 
     const getPageConfig = (currentTheme: 'light' | 'dark', pathname: string): PageConfig => {
-        const validRoutes = ["/", "/search-results", "/review-booking", "mobile-app", "/faq\'s", "/contact", "/mobile-app", "/payment"];
+        const validRoutes = ["/", "/search-results", "/review-booking", "mobile-app", "/faq\'s", "/contact", "/mobile-app", "/payment", "/success"];
         const isValidRoute = validRoutes.includes(pathname)
         if(currentTheme === 'dark' || !isValidRoute) {
             return {
@@ -55,6 +56,7 @@ function App() {
             <Route path="/search-results" element={<SearchResultsPage />} />
             <Route path="/review-booking" element={<ReviewBookingPage />} />
             <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/success" element={<SuccessPage />} />
             <Route path="/mobile-app" element={<h1>Здесь должно быть мобильное приложение</h1>} />
             <Route path="/faq's" element={<h1>Здесь должны быть часто задаваемые вопросы</h1>} />
             <Route path="/contact" element={<h1>Здесь должны быть контакты</h1>} />

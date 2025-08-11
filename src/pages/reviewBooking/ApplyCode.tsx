@@ -2,7 +2,6 @@ import { useAppSelector } from "../../store/hooks.ts";
 
 function ApplyCode() {
     const { selectedPromoCode } = useAppSelector(state => state.booking)
-    console.log(selectedPromoCode)
 
     return (
         <div className="apply-code">

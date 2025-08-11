@@ -41,10 +41,6 @@ function PaymentPage(){
     return (
         <section className="section">
             <div className="container container__content">
-                {/* Отладочный блок */}
-                <pre>{JSON.stringify(booking, null, 2)}</pre>
-
-
 
                 <h2 className="section__title">Pay <span style={{color: "#FF6060"}}>{booking.totalPrice}</span> to confirm booking</h2>
                 <div className="details-box">
