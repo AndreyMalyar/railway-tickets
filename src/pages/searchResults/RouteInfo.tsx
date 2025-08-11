@@ -1,11 +1,17 @@
-import type {TrainStation} from "../../data/trainData.ts";
 import { formatDate } from "../../utilits/dateFormatter.ts"
 
+
+interface TrainStation {
+    date: string;
+    time: string;
+    station: string;
+}
 type RouteInfoType = {
     departure: TrainStation;
     arrival: TrainStation;
     duration: string;
 }
+
 
 
 function RouteInfo({departure, arrival, duration}: RouteInfoType){

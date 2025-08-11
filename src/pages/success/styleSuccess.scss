@@ -1,0 +1,105 @@
+
+.success{
+  & .logo-color{
+    display: block;
+    margin: 0 auto;
+  }
+  &__title{
+    margin: 24px 0 30px;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 45px;
+    text-align: center;
+
+    color: #31A91D;
+  }
+
+  &-details{
+
+    &__box{
+      padding: 32px 24px;
+      background: #FFFFFF;
+      border: 1px solid rgba(1, 4, 0, 0.5);
+      border-radius: 10px;
+    }
+
+    &__numbers{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #010400;
+    }
+
+    &__info{
+      margin: 20px 0;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 30px;
+      color: #010400;
+    }
+
+    &__title{
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 30px;
+      color: #010400;
+      margin: 16px 0 10px;
+    }
+
+    &__passenger{
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+
+      color: #010400;
+    }
+
+    &__boking-info{
+      margin: 10px 0;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+
+      color: rgba(1, 4, 0, 0.5);
+    }
+
+    &__email{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+
+      color: #010400;
+    }
+
+    &__total{
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 30px;
+
+      color: #010400;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
